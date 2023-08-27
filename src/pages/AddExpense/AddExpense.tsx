@@ -1,4 +1,5 @@
-import { MouseEvent, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
+import useSubcategories from "../../hooks/useSubcategories/useSubcategories";
 
 
 const Label = ({ htmlFor, children }: PropsWithChildren & { htmlFor: string }) => {
@@ -6,9 +7,14 @@ const Label = ({ htmlFor, children }: PropsWithChildren & { htmlFor: string }) =
 }
 
 const AddExpense = () => {
-    function handleExport(): void {
+
+    const subcategories = useSubcategories()
+
+    function handleSave(): void {
         console.log('Save...')
     }
+
+    if (!subcategories.length) return <>Loading...</>
 
     return (<div className="min-w-[320px] relative flex flex-col h-full max-h-[80vh]">
         <input className="w-full p-2 rounded" placeholder="Amount" />
@@ -16,7 +22,12 @@ const AddExpense = () => {
         <Label htmlFor="subcategory">Category</Label>
         <select id="subcategory" className="w-full mt-2 p-2 rounded">
             <option value="none">None</option>
-            <option value="none2">...</option>
+            {
+                subcategories.map(({ subcategory, wallet }) =>
+                    <option key={subcategory} value={subcategory}>{subcategory}</option>
+                )
+            }
+
         </select>
 
         <Label htmlFor="wallet">Wallet</Label>
@@ -28,7 +39,7 @@ const AddExpense = () => {
         <Label htmlFor="description">Description</Label>
         <textarea id="description" rows={4} className="w-full mt-2 p-2" />
 
-        <button className="w-full mt-10 bg-emerald-700" onClick={handleExport}>Export</button>
+        <button className="w-full mt-10 bg-emerald-700" onClick={handleSave}>Export</button>
     </div>);
 }
 
