@@ -24,7 +24,7 @@ const ExpensesList = () => {
         alert('Exporting...!')
     }
 
-    function handleDataWipe(event: MouseEvent<HTMLAnchorElement, MouseEvent>): void {
+    function handleDataWipe(event: MouseEvent<HTMLAnchorElement>): void {
         event.preventDefault()
         alert('Clearing....')
     }
@@ -34,7 +34,7 @@ const ExpensesList = () => {
             <ListItem item={expenseItem} />)}
 
         <div className="absolute bottom-0 w-full">
-            <button className="w-full mb-2"
+            <button className="w-full mb-2 bg-emerald-700"
                 onClick={handleExport}
             >Export</button>
             <a href="#" onClick={handleDataWipe} className="text-sm text-red-600 dark:text-red-500 hover:underline">Clear</a>
