@@ -34,7 +34,6 @@ export const fetchWallets = async () => {
     let data = JSON.parse(rep.substring(47).slice(0, -2))
 
     const filteredRows = data.table.rows
-        .filter((_: SheetsRowProps, index: number) => index > 0) // Skip first, just titles
         .map((row: SheetsRowProps) => {
             const [wallet] = row.c
             return { wallet: wallet.v }
