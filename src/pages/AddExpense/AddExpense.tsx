@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import useSubcategories from "../../hooks/useSubcategories/useSubcategories";
+import useGoogleSheets from "../../hooks/useGoogleSheets/useGoogleSheets";
 
 
 const Label = ({ htmlFor, children }: PropsWithChildren & { htmlFor: string }) => {
@@ -8,7 +8,7 @@ const Label = ({ htmlFor, children }: PropsWithChildren & { htmlFor: string }) =
 
 const AddExpense = () => {
 
-    const subcategories = useSubcategories()
+    const { subcategories, wallets } = useGoogleSheets()
 
     function handleSave(): void {
         console.log('Save...')
@@ -33,7 +33,11 @@ const AddExpense = () => {
         <Label htmlFor="wallet">Wallet</Label>
         <select id="wallet" className="w-full mt-2 p-2 rounded">
             <option value="none">None</option>
-            <option value="none2">...</option>
+            {
+                wallets.map(({ wallet }) =>
+                    <option key={wallet} value={wallet}>{wallet}</option>
+                )
+            }
         </select>
 
         <Label htmlFor="description">Description</Label>
