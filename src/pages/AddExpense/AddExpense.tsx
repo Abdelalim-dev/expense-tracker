@@ -1,10 +1,22 @@
-import React, { ChangeEvent, MouseEvent, PropsWithChildren } from "react";
+import React, { ChangeEvent, PropsWithChildren } from "react";
 import useGoogleSheets from "../../hooks/useGoogleSheets/useGoogleSheets";
+import { z } from "zod";
 
 
 const Label = ({ htmlFor, children }: PropsWithChildren & { htmlFor: string }) => {
     return <label htmlFor={htmlFor} className="block text-start mt-6 text-sm text-gray-300">{children}</label>
 }
+
+const Error = ({ children }: PropsWithChildren) => {
+    return <span className="block text-start text-xs text-red-500 mt-1">{children}</span>
+}
+
+const FormSchema = z.object({
+    amount: z.number().gt(0, "Set an amount"),
+    subcategory: z.string().min(1, "Select a subcategory"),
+    wallet: z.string().min(1, "Select a wallet"),
+    description: z.string().optional()
+})
 
 const AddExpense = () => {
 
@@ -14,11 +26,55 @@ const AddExpense = () => {
     const [selectedWallet, setSelectedWallet] = React.useState<undefined | string>(undefined)
     const [description, setDescription] = React.useState("")
 
+    const [errorAmount, setErrorAmount] = React.useState("")
+    const [errorSubcategory, setErrorSubcategory] = React.useState("")
+    const [errorWallet, setErrorWallet] = React.useState("")
+
     function handleSave(): void {
-        console.log('Save...', amount, selectedSubcategory, selectedWallet, description)
+        const data = {
+            amount,
+            subcategory: selectedSubcategory!,
+            wallet: selectedWallet!,
+            description
+        }
+
+        const isValid = isValidForm(data)
+
+        if (isValid) submitForm()
+    }
+
+    function isValidForm(formData: z.infer<typeof FormSchema>): boolean {
+
+        const results = FormSchema.safeParse(formData)
+
+        if (results.success) return true
+
+        const errors = results.error.format()
+
+        if (errors.amount) setErrorAmount(errors.amount._errors[0])
+
+        if (errors.subcategory) setErrorSubcategory(errors.subcategory._errors[0])
+
+        if (errors.wallet) setErrorWallet(errors.wallet._errors[0])
+
+        return false
+    }
+
+    function submitForm() {
+
+        // TODO: data saving (Firebase)
+
+        setAmount(0)
+        setSelectedSubcategory('')
+        setSelectedWallet('')
+        setDescription('')
+
+        alert('toast: DONE!')
     }
 
     function onChangeSubcategory(event: ChangeEvent<HTMLSelectElement>): void {
+
+        setErrorSubcategory('')
 
         const [subcategory, wallet] = event.target.value.split('.')
 
@@ -29,10 +85,15 @@ const AddExpense = () => {
 
     function onChangeWallet(event: ChangeEvent<HTMLSelectElement>): void {
 
+        setErrorWallet('')
+
         setSelectedWallet(event.target.value)
     }
 
     function onChangeAmount(event: ChangeEvent<HTMLInputElement>): void {
+
+        setErrorAmount('')
+
         const _amount = event.target.value
 
         if (isNaN(Number(_amount))) return
@@ -50,11 +111,12 @@ const AddExpense = () => {
 
     return (<div className="min-w-[320px] relative flex flex-col h-full max-h-[80vh]">
         <input className="w-full p-2 rounded" placeholder="Amount" value={amount} onChange={onChangeAmount} />
+        <Error>{errorAmount}</Error>
 
         <Label htmlFor="subcategory">Category</Label>
         <select id="subcategory" className="w-full mt-2 p-2 rounded"
-            onChange={onChangeSubcategory}>
-            <option value="none">None</option>
+            value={selectedSubcategory} onChange={onChangeSubcategory}>
+            <option value="" disabled>None</option>
             {
                 subcategories.map(({ subcategory, wallet }) =>
                     <option key={subcategory} value={`${subcategory}.${wallet}`}>
@@ -62,13 +124,13 @@ const AddExpense = () => {
                     </option>
                 )
             }
-
         </select>
+        <Error>{errorSubcategory}</Error>
 
         <Label htmlFor="wallet">Wallet</Label>
         <select id="wallet" className="w-full mt-2 p-2 rounded"
             value={selectedWallet} onChange={onChangeWallet}>
-            <option value="none">None</option>
+            <option value="" disabled>None</option>
             {
                 wallets.map(({ wallet }) =>
                     <option key={wallet} value={wallet}>
@@ -77,9 +139,10 @@ const AddExpense = () => {
                 )
             }
         </select>
+        <Error>{errorWallet}</Error>
 
         <Label htmlFor="description">Description</Label>
-        <textarea id="description" rows={4} className="w-full mt-2 p-2" onChange={onChangeDescription} />
+        <textarea id="description" rows={4} className="w-full mt-2 p-2" value={description} onChange={onChangeDescription} />
 
         <button className="w-full mt-10 bg-emerald-700" onClick={handleSave}>Export</button>
     </div>);
