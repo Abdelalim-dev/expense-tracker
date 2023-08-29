@@ -1,24 +1,26 @@
 import React, { MouseEvent } from "react"
 import ListItem from "./ListItem"
 import { ExpenseProps } from "../../types/Expense"
+import { getExpenses } from "../../service/api"
 
 
 const ExpensesList = () => {
-    const [expensesList, setExpensesList] = React.useState<ExpenseProps[]>([
-        {
-            "date": "22-08-2023",
-            "amount": "40+140+100",
-            "wallet": "Groceries",
-            "subcategory": "Groceries",
-            "description": "bread, milk, flour"
-        }, {
-            "date": "22-08-2023",
-            "amount": "160",
-            "wallet": "Groceries",
-            "subcategory": "Veggies",
-            "description": "tomatoes"
-        },
-    ])
+
+    const [expenses, setExpenses] = React.useState<ExpenseProps[]>([])
+
+    React.useEffect(() => {
+
+        const unsubscribe = getExpenses(data => {
+
+            const keys = Object.keys(data)
+
+            const _expenses = keys.map(key => ({ key, ...data[key] })) as Array<ExpenseProps>
+
+            setExpenses(_expenses)
+        })
+
+        return () => unsubscribe()
+    }, [])
 
     function handleExport(): void {
         alert('Exporting...!')
@@ -29,9 +31,11 @@ const ExpensesList = () => {
         alert('Clearing....')
     }
 
+    if (!expenses.length) return <>Loading...</>
+
     return (<div className="h-full relative">
-        {expensesList.map((expenseItem) =>
-            <ListItem item={expenseItem} />)}
+        {expenses.map((item) =>
+            <ListItem key={item.key} item={item} />)}
 
         <div className="absolute bottom-0 w-full">
             <button className="w-full mb-2 bg-emerald-700"
