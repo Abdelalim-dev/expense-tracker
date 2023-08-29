@@ -78,7 +78,7 @@ const AddExpense = () => {
 
         const [subcategory, wallet] = event.target.value.split('.')
 
-        setSelectedSubcategory(subcategory)
+        setSelectedSubcategory(`${subcategory}.${wallet}`)
 
         if (wallet != null) setSelectedWallet(wallet)
     }
