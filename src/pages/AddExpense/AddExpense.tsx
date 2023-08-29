@@ -1,6 +1,7 @@
 import React, { ChangeEvent, PropsWithChildren } from "react";
 import useGoogleSheets from "../../hooks/useGoogleSheets/useGoogleSheets";
-import { z } from "zod";
+import { ExpenseProps, ZodExpenseSchema } from "../../types/Expense";
+import { insertExpense } from "../../service/api";
 
 
 const Label = ({ htmlFor, children }: PropsWithChildren & { htmlFor: string }) => {
@@ -11,19 +12,12 @@ const Error = ({ children }: PropsWithChildren) => {
     return <span className="block text-start text-xs text-red-500 mt-1">{children}</span>
 }
 
-const FormSchema = z.object({
-    amount: z.number().gt(0, "Set an amount"),
-    subcategory: z.string().min(1, "Select a subcategory"),
-    wallet: z.string().min(1, "Select a wallet"),
-    description: z.string().optional()
-})
-
 const AddExpense = () => {
 
     const { subcategories, wallets } = useGoogleSheets()
     const [amount, setAmount] = React.useState(0)
-    const [selectedSubcategory, setSelectedSubcategory] = React.useState<undefined | string>(undefined)
-    const [selectedWallet, setSelectedWallet] = React.useState<undefined | string>(undefined)
+    const [selectedSubcategory, setSelectedSubcategory] = React.useState('')
+    const [selectedWallet, setSelectedWallet] = React.useState('')
     const [description, setDescription] = React.useState("")
 
     const [errorAmount, setErrorAmount] = React.useState("")
@@ -31,21 +25,24 @@ const AddExpense = () => {
     const [errorWallet, setErrorWallet] = React.useState("")
 
     function handleSave(): void {
+        const [subcategory] = selectedSubcategory?.split('.')
+
         const data = {
             amount,
-            subcategory: selectedSubcategory!,
+            subcategory: subcategory,
             wallet: selectedWallet!,
-            description
+            description,
+            date: new Date().getTime(),
         }
 
         const isValid = isValidForm(data)
 
-        if (isValid) submitForm()
+        if (isValid) submitForm(data)
     }
 
-    function isValidForm(formData: z.infer<typeof FormSchema>): boolean {
+    function isValidForm(formData: ExpenseProps): boolean {
 
-        const results = FormSchema.safeParse(formData)
+        const results = ZodExpenseSchema.safeParse(formData)
 
         if (results.success) return true
 
@@ -60,16 +57,20 @@ const AddExpense = () => {
         return false
     }
 
-    function submitForm() {
+    function submitForm(data: ExpenseProps) {
 
-        // TODO: data saving (Firebase)
+        insertExpense(data)
 
+        cleanupForm()
+
+        alert('toast: DONE!')
+    }
+
+    function cleanupForm() {
         setAmount(0)
         setSelectedSubcategory('')
         setSelectedWallet('')
         setDescription('')
-
-        alert('toast: DONE!')
     }
 
     function onChangeSubcategory(event: ChangeEvent<HTMLSelectElement>): void {
