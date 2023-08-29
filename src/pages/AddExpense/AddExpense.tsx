@@ -15,7 +15,7 @@ const Error = ({ children }: PropsWithChildren) => {
 const AddExpense = () => {
 
     const { subcategories, wallets } = useGoogleSheets()
-    const [amount, setAmount] = React.useState(0)
+    const [amount, setAmount] = React.useState('')
     const [selectedSubcategory, setSelectedSubcategory] = React.useState('')
     const [selectedWallet, setSelectedWallet] = React.useState('')
     const [description, setDescription] = React.useState("")
@@ -67,7 +67,7 @@ const AddExpense = () => {
     }
 
     function cleanupForm() {
-        setAmount(0)
+        setAmount('')
         setSelectedSubcategory('')
         setSelectedWallet('')
         setDescription('')
@@ -101,7 +101,7 @@ const AddExpense = () => {
 
         if (Number(_amount) > 9999999999999) return
 
-        setAmount(Number(_amount))
+        setAmount(_amount)
     }
 
     function onChangeDescription(event: ChangeEvent<HTMLTextAreaElement>): void {
