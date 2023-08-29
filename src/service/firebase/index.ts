@@ -12,5 +12,8 @@ const firebaseConfig = {
   databaseURL: import.meta.env.VITE_DB,
 };
 
+export const init = () => {
+  initializeApp(firebaseConfig)
+}
 
-export const app = initializeApp(firebaseConfig);
+export { getExpenses, insertExpense } from './crud'

@@ -1,4 +1,12 @@
 
+import { init as initFirebase } from './firebase'
+
+
+export { getExpenses, insertExpense } from './api/expense'
+
+export const init = () => {
+    initFirebase()
+}
 
 const SHEET_URL = import.meta.env.VITE_SHEET_URL
 
