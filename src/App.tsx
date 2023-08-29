@@ -1,16 +1,12 @@
 import './App.css'
-import { AddExpense } from './pages'
-import ExpensesList from './pages/ExpensesList/ExpensesList'
+import { Home } from './pages'
 import { init as apiInit } from './service/api'
 
 apiInit()
 
 function App() {
 
-  return (
-    // <ExpensesList />
-    <AddExpense />
-  )
+  return (<Home />)
 }
 
 export default App
