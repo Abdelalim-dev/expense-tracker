@@ -3,6 +3,9 @@ import useGoogleSheets from "../../hooks/useGoogleSheets/useGoogleSheets";
 import { ExpenseProps, ZodExpenseSchema } from "../../types/Expense";
 import { insertExpense } from "../../service/api";
 
+import { ToastContainer as Toast, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Label = ({ htmlFor, children }: PropsWithChildren & { htmlFor: string }) => {
     return <label htmlFor={htmlFor} className="block text-start mt-6 text-sm text-gray-300">{children}</label>
@@ -63,7 +66,7 @@ const AddExpense = () => {
 
         cleanupForm()
 
-        alert('toast: DONE!')
+        toast("Added!", { type: "success" })
     }
 
     function cleanupForm() {
@@ -145,7 +148,13 @@ const AddExpense = () => {
         <Label htmlFor="description">Description</Label>
         <textarea id="description" rows={4} className="w-full mt-2 p-2" value={description} onChange={onChangeDescription} />
 
-        <button className="w-full mt-10 bg-emerald-700" onClick={handleSave}>Export</button>
+        <button className="w-full mt-10 bg-emerald-700" onClick={handleSave}>Save</button>
+
+        <Toast
+            position="top-center"
+            autoClose={1000}
+            closeOnClick
+        />
     </div>);
 }
 

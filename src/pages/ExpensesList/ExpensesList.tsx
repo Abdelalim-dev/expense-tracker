@@ -33,7 +33,6 @@ const ExpensesList = () => {
         const confirmed = confirm("Delete all data permanently")
         if (confirmed) {
             wipeData()
-            console.log('DONE, all data removed')
         }
     }
 
