@@ -30,8 +30,6 @@ const ExpensesList = () => {
     function handleExport(): void {
         const expenseLogs = prepareDataForExport(expenses)
 
-        if (expenseLogs == "") return
-
         navigator.clipboard.writeText(expenseLogs.join('\n'));
 
         toast("Copied to clipboard", { type: "success" })
