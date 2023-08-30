@@ -1,4 +1,4 @@
-import { Unsubscribe, child, getDatabase, onValue, push, ref, update } from "firebase/database";
+import { Unsubscribe, child, getDatabase, onValue, push, ref, remove, update } from "firebase/database";
 
 const PATH_EXPENSES = 'expenses'
 
@@ -26,4 +26,12 @@ export const insertExpense = (data: any) => {
     updates[`/${PATH_EXPENSES}/` + newKey] = data;
 
     return update(ref(db), updates);
+}
+
+
+export function wipeData() {
+
+    const db = getDatabase()
+
+    remove(ref(db, PATH_EXPENSES))
 }

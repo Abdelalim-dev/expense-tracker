@@ -16,4 +16,4 @@ export const init = () => {
   initializeApp(firebaseConfig)
 }
 
-export { getExpenses, insertExpense } from './crud'
+export { getExpenses, insertExpense, wipeData } from './crud'

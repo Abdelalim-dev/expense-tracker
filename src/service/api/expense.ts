@@ -7,3 +7,6 @@ export const getExpenses = (callback: (data: any) => void) => {
 export const insertExpense = (data: ExpenseProps) => {
     FirebaseHandler.insertExpense(data)
 }
+export const wipeData = () => {
+    FirebaseHandler.wipeData()
+}

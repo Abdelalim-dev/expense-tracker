@@ -2,7 +2,7 @@
 import { init as initFirebase } from './firebase'
 
 
-export { getExpenses, insertExpense } from './api/expense'
+export { getExpenses, insertExpense, wipeData } from './api/expense'
 
 export const init = () => {
     initFirebase()
