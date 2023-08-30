@@ -6,7 +6,7 @@ export const ZodExpenseSchema = z.object({
     subcategory: z.string().min(1, "Select a subcategory"),
     wallet: z.string().min(1, "Select a wallet"),
     description: z.string().optional(),
-    date: z.number().optional(),
+    date: z.number(),
 })
 
 export type ExpenseProps = z.infer<typeof ZodExpenseSchema>
