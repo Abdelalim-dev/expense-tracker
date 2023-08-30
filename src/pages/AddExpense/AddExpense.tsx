@@ -4,7 +4,6 @@ import { ExpenseProps, ZodExpenseSchema } from "../../types/Expense";
 import { insertExpense } from "../../service/api";
 
 import { ToastContainer as Toast, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 const Label = ({ htmlFor, children }: PropsWithChildren & { htmlFor: string }) => {
@@ -153,7 +152,6 @@ const AddExpense = () => {
         <Toast
             position="top-center"
             autoClose={1000}
-            closeOnClick
         />
     </div>);
 }
