@@ -2,6 +2,9 @@ import React, { MouseEvent } from "react"
 import ListItem from "./ListItem"
 import { ExpenseProps } from "../../types/Expense"
 import { getExpenses, wipeData } from "../../service/api"
+import prepareDataForExport from "./utils/export"
+
+import { ToastContainer, toast } from "react-toastify"
 
 
 const ExpensesList = () => {
@@ -25,7 +28,13 @@ const ExpensesList = () => {
     }, [])
 
     function handleExport(): void {
-        alert('Exporting...!')
+        const expenseLogs = prepareDataForExport(expenses)
+
+        if (expenseLogs == "") return
+
+        navigator.clipboard.writeText(expenseLogs.join('\n'));
+
+        toast("Copied to clipboard", { type: "success" })
     }
 
     function handleDataWipe(event: MouseEvent<HTMLAnchorElement>): void {
@@ -53,6 +62,7 @@ const ExpensesList = () => {
             </a>
         </div>
 
+        <ToastContainer position="top-center" autoClose={1000} hideProgressBar />
     </div>)
 }
 
