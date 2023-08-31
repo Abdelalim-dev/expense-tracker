@@ -13,7 +13,7 @@ const ListItem = ({ item }: { item: ExpenseProps }) => {
 
         <div className="flex justify-between text-xs text-gray-500">
             <span>{item.description}</span>
-            <span>{item.date}</span>
+            <span>{(new Date(item.date)).toDateString()}</span>
         </div>
     </div>);
 }
