@@ -113,7 +113,7 @@ const AddExpense = () => {
     if (!subcategories.length) return <>Loading...</>
 
     return (<div className="min-w-[320px] relative flex flex-col h-full max-h-[80vh]">
-        <input className="w-full p-2 rounded" placeholder="Amount" value={amount} onChange={onChangeAmount} />
+        <input inputMode="numeric" className="w-full p-2 rounded" placeholder="Amount" value={amount} onChange={onChangeAmount} />
         <Error>{errorAmount}</Error>
 
         <Label htmlFor="subcategory">Category</Label>
