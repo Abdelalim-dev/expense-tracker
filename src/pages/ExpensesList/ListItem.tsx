@@ -7,12 +7,14 @@ import groceries from "../../assets/icons/icn-groceries.svg"
 import home from "../../assets/icons/icn-home.svg"
 import kids from "../../assets/icons/icn-kids.svg"
 import us from "../../assets/icons/icn-us.svg"
+import other from "../../assets/icons/icn-exclamation.svg"
 const icons: { [key: string]: string } = { bills, doc, groceries, home, kids, us }
 
 
 type IconProps = { name: string } & ComponentProps<"img">
 const Icon = ({ name, ...props }: IconProps) => {
-    return <img src={icons[name]} width={32} alt={`Icon ${name}`} {...props} />
+    const icon = icons[name] || other
+    return <img src={icon} width={32} alt={`Icon ${name}`} {...props} />
 }
 
 const ListItem = ({ item }: { item: ExpenseProps }) => {
