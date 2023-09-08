@@ -21,7 +21,9 @@ const ExpensesList = () => {
 
             const _expenses = keys.map(key => ({ key, ...data[key] })) as Array<ExpenseProps>
 
-            setExpenses(_expenses)
+            const sorted = _expenses.sort((a: ExpenseProps, b: ExpenseProps) => a.date - b.date)
+
+            setExpenses(sorted)
         })
 
         return () => unsubscribe()
