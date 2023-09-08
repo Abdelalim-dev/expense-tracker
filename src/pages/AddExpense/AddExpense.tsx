@@ -116,10 +116,9 @@ const AddExpense = () => {
         <input inputMode="numeric" className="w-full p-2 rounded" placeholder="Amount" value={amount} onChange={onChangeAmount} />
         <Error>{errorAmount}</Error>
 
-        <Label htmlFor="subcategory">Category</Label>
         <select id="subcategory" className="w-full mt-2 p-2 rounded"
             value={selectedSubcategory} onChange={onChangeSubcategory}>
-            <option value="" disabled>None</option>
+            <option value="" disabled>Subcategory</option>
             {
                 subcategories.map(({ subcategory, wallet }) =>
                     <option key={subcategory} value={`${subcategory}.${wallet}`}>
@@ -130,10 +129,9 @@ const AddExpense = () => {
         </select>
         <Error>{errorSubcategory}</Error>
 
-        <Label htmlFor="wallet">Wallet</Label>
         <select id="wallet" className="w-full mt-2 p-2 rounded"
             value={selectedWallet} onChange={onChangeWallet}>
-            <option value="" disabled>None</option>
+            <option value="" disabled>Wallet</option>
             {
                 wallets.map(({ wallet }) =>
                     <option key={wallet} value={wallet}>
@@ -144,10 +142,9 @@ const AddExpense = () => {
         </select>
         <Error>{errorWallet}</Error>
 
-        <Label htmlFor="description">Description</Label>
-        <textarea id="description" rows={4} className="w-full mt-2 p-2" value={description} onChange={onChangeDescription} />
+        <textarea id="description" placeholder="Description" rows={4} className="w-full mt-2 p-2" value={description} onChange={onChangeDescription} />
 
-        <button className="w-full mt-10 bg-emerald-700" onClick={handleSave}>Save</button>
+        <button className="w-full mt-5 bg-emerald-700" onClick={handleSave}>Save</button>
 
         <Toast
             position="top-center"
