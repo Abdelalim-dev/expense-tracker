@@ -52,19 +52,22 @@ const ExpensesList = () => {
                     <ListItem key={item.key} item={item} />)}
             </div>
 
-            <div className="sticky bottom-0 mt-3 p-2 bg-zinc-100 dark:bg-zinc-900">
-                <button className="mb-2 bg-emerald-700" onClick={handleExport}>
-                    Export
-                </button>
+            {!!expenses.length ?
+                < div className="sticky bottom-0 mt-3 p-2 bg-zinc-100 dark:bg-zinc-900">
+                    <button className="mb-2 bg-emerald-700" onClick={handleExport}>
+                        Export
+                    </button>
 
-                <a href="#" onClick={handleDataWipe}
-                    className="block text-sm text-red-600 dark:text-red-500 hover:underline">
-                    Clear
-                </a>
-            </div>
+                    <a href="#" onClick={handleDataWipe}
+                        className="block text-sm text-red-600 dark:text-red-500 hover:underline">
+                        Clear
+                    </a>
+                </div>:
+                <>No items</>
+            }
 
             <ToastContainer position="top-center" autoClose={1000} hideProgressBar />
-        </div>
+        </div >
     )
 }
 
