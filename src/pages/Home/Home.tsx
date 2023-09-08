@@ -7,14 +7,17 @@ const Home = () => {
     // By default show the add expense page
     const [showList, setShowList] = React.useState(false)
 
-    
+
     const content = showList ? <ExpensesList /> : <AddExpense />
     return (<>
-        <div>
-            <button className={showList ? 'bg-green-700' : ''} onClick={() => setShowList(true)}>Expenses List</button>
-            <button className={!showList ? 'bg-green-700' : ''} onClick={() => setShowList(false)}>Add new Expense</button>
+        <>
+            <button className={showList ? 'bg-green-700' : ''} onClick={() => setShowList(true)}>List</button>
+            <button className={!showList ? 'bg-green-700' : ''} onClick={() => setShowList(false)}>New</button>
+        </>
+
+        <div className="mt-3">
+            {content}
         </div>
-        {content}
     </>)
 }
 

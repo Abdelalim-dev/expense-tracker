@@ -2,7 +2,7 @@ import { ExpenseProps } from "../../types/Expense";
 
 
 const ListItem = ({ item }: { item: ExpenseProps }) => {
-    return (<div className="bg-white mt-2 py-2 px-4 rounded min-w-[320px] dark:bg-neutral-800 cursor-pointer">
+    return (<div className="bg-white mt-2 py-2 px-4 rounded dark:bg-neutral-800 cursor-pointer">
 
         <div className="flex justify-between">
             <span>{item.subcategory}</span>

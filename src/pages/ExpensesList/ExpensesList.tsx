@@ -45,23 +45,27 @@ const ExpensesList = () => {
 
     if (!expenses) return <>Loading...</>
 
-    return (<div className="h-full relative">
-        {expenses.map((item) =>
-            <ListItem key={item.key} item={item} />)}
+    return (
+        <div className="max-h-[85vh] overflow-y-scroll">
+            <div className="">
+                {expenses.map((item) =>
+                    <ListItem key={item.key} item={item} />)}
+            </div>
 
-        <div className="absolute bottom-0 w-full">
-            <button className="w-full mb-2 bg-emerald-700"
-                onClick={handleExport}
-            >Export</button>
+            <div className="sticky bottom-0 mt-3 p-2 bg-zinc-100 dark:bg-zinc-900">
+                <button className="mb-2 bg-emerald-700" onClick={handleExport}>
+                    Export
+                </button>
 
-            <a href="#" onClick={handleDataWipe}
-                className="text-sm text-red-600 dark:text-red-500 hover:underline">
-                Clear
-            </a>
+                <a href="#" onClick={handleDataWipe}
+                    className="block text-sm text-red-600 dark:text-red-500 hover:underline">
+                    Clear
+                </a>
+            </div>
+
+            <ToastContainer position="top-center" autoClose={1000} hideProgressBar />
         </div>
-
-        <ToastContainer position="top-center" autoClose={1000} hideProgressBar />
-    </div>)
+    )
 }
 
 export default ExpensesList
