@@ -46,23 +46,24 @@ const ExpensesList = () => {
     if (!expenses) return <>Loading...</>
 
     return (
-        <div className="max-h-[85vh] overflow-y-scroll">
+        <div className="max-h-[54vh] overflow-y-scroll">
             <div className="">
                 {expenses.map((item) =>
                     <ListItem key={item.key} item={item} />)}
             </div>
 
             {!!expenses.length ?
-                < div className="sticky bottom-0 mt-3 p-2 bg-zinc-100 dark:bg-zinc-900">
-                    <button className="mb-2 bg-emerald-700" onClick={handleExport}>
-                        Export
-                    </button>
+                < div className="sticky bottom-0 mt-2 py-2 flex justify-between items-center bg-zinc-100 dark:bg-zinc-900">
 
                     <a href="#" onClick={handleDataWipe}
-                        className="block text-sm text-red-600 dark:text-red-500 hover:underline">
+                        className="text-sm text-red-600 dark:text-red-500 hover:underline">
                         Clear
                     </a>
-                </div>:
+
+                    <button className="bg-emerald-700" onClick={handleExport}>
+                        Export
+                    </button>
+                </div> :
                 <>No items</>
             }
 

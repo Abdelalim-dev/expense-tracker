@@ -6,10 +6,6 @@ import { insertExpense } from "../../service/api";
 import { ToastContainer as Toast, toast } from 'react-toastify';
 
 
-const Label = ({ htmlFor, children }: PropsWithChildren & { htmlFor: string }) => {
-    return <label htmlFor={htmlFor} className="block text-start mt-6 text-sm text-gray-300">{children}</label>
-}
-
 const Error = ({ children }: PropsWithChildren) => {
     return <span className="block text-start text-xs text-red-500 mt-1">{children}</span>
 }
@@ -112,7 +108,7 @@ const AddExpense = () => {
 
     if (!subcategories.length) return <>Loading...</>
 
-    return (<div className="relative flex flex-col h-full max-h-[80vh]">
+    return (<div className="relative flex flex-col">
         <input inputMode="numeric" className="w-full p-2 rounded" placeholder="Amount" value={amount} onChange={onChangeAmount} />
         <Error>{errorAmount}</Error>
 
@@ -142,9 +138,9 @@ const AddExpense = () => {
         </select>
         <Error>{errorWallet}</Error>
 
-        <textarea id="description" placeholder="Description" rows={4} className="w-full mt-2 p-2" value={description} onChange={onChangeDescription} />
+        <textarea id="description" placeholder="Description" rows={1} className="w-full mt-2 p-2" value={description} onChange={onChangeDescription} />
 
-        <button className="w-full mt-5 bg-emerald-700" onClick={handleSave}>Save</button>
+        <button className="self-end mt-5 bg-emerald-700" onClick={handleSave}>Save</button>
 
         <Toast
             position="top-center"
