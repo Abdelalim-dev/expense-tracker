@@ -21,7 +21,8 @@ const ExpensesList = () => {
 
             const _expenses = keys.map(key => ({ key, ...data[key] })) as Array<ExpenseProps>
 
-            const sorted = _expenses.sort((a: ExpenseProps, b: ExpenseProps) => a.date - b.date)
+            // Most recent on top
+            const sorted = _expenses.sort((a: ExpenseProps, b: ExpenseProps) => b.date - a.date)
 
             setExpenses(sorted)
         })
