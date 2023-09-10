@@ -30,8 +30,14 @@ const ExpensesList = () => {
         return () => unsubscribe()
     }, [])
 
-    function handleExport(): void {
-        const expenseLogs = prepareDataForExport(expenses)
+    function onExportPress(): void {
+
+        if (!expenses || expenses.length == 0) return
+
+        // Create a copy to avoid mutating the original & inverse 
+        const expensesASC = [...expenses].sort((a: ExpenseProps, b: ExpenseProps) => a.date - b.date)
+
+        const expenseLogs = prepareDataForExport(expensesASC)
 
         navigator.clipboard.writeText(expenseLogs.join('\n'));
 
@@ -63,7 +69,7 @@ const ExpensesList = () => {
                         Clear
                     </a>
 
-                    <button className="bg-emerald-700" onClick={handleExport}>
+                    <button className="bg-emerald-700" onClick={onExportPress}>
                         Export
                     </button>
                 </div> :
