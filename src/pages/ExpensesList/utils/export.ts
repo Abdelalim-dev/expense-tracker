@@ -40,12 +40,13 @@ const groupExpenses = (expenses: Array<ExpenseProps>) => {
             groupedExpenses[key] = expense
         } else {
             const tmp = groupedExpenses[key]
+            const prefix = tmp.amount.startsWith('=') ? '' : '='
 
             // Using Sheet's format for the amount
             // I don't want to evaluate the expression because I need each amount for archive
             groupedExpenses[key] = {
                 ...tmp,
-                amount: `=${tmp.amount}+${expense.amount}`,
+                amount: `${prefix}${tmp.amount}+${expense.amount}`,
                 description: tmp.description + ', ' + expense.description,
             }
         }
