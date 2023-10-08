@@ -8,6 +8,8 @@ import 'react-calendar/dist/Calendar.css';
 import { ToastContainer as Toast, toast } from 'react-toastify';
 import DatePicker from "react-date-picker";
 
+type ValuePiece = Date | null;
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const Error = ({ children }: PropsWithChildren) => {
     return <span className="block text-start text-xs text-red-500 mt-1">{children}</span>
@@ -20,7 +22,7 @@ const AddExpense = () => {
     const [selectedSubcategory, setSelectedSubcategory] = React.useState('')
     const [selectedWallet, setSelectedWallet] = React.useState('')
     const [description, setDescription] = React.useState("")
-    const [date, setDate] = React.useState(new Date())
+    const [date, setDate] = React.useState<Value>(new Date())
 
     const [errorAmount, setErrorAmount] = React.useState("")
     const [errorSubcategory, setErrorSubcategory] = React.useState("")
@@ -34,7 +36,7 @@ const AddExpense = () => {
             subcategory: subcategory,
             wallet: selectedWallet!,
             description,
-            date: date.getTime(),
+            date: date?.valueOf() as number,
         }
 
         const isValid = isValidForm(data)
@@ -110,7 +112,7 @@ const AddExpense = () => {
         setDescription(event.target.value)
     }
 
-    function onChangeDate(value): void {
+    function onChangeDate(value: Value): void {
         console.log(value)
         setDate(value)
     }
