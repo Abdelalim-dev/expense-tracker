@@ -135,26 +135,23 @@ const AddExpense = () => {
         </select>
         <Error>{errorSubcategory}</Error>
 
-        <div className="flex items-center mt-2">
-            <div className="flex flex-1">
-                <select id="wallet" className="w-full p-2 rounded"
-                    value={selectedWallet} onChange={onChangeWallet}>
-                    <option value="" disabled>Wallet</option>
-                    {
-                        wallets.map(({ wallet }) =>
-                            <option key={wallet} value={wallet}>
-                                {wallet}
-                            </option>
-                        )
-                    }
-                </select>
-                <Error>{errorWallet}</Error>
-            </div>
-            <div className="flex-1">
-                <DatePicker format="dd-MM-y"
-                    value={date} onChange={onChangeDate} />
-            </div>
+        <div className="flex mt-2">
+            <select id="wallet" className="w-full p-2 rounded"
+                value={selectedWallet} onChange={onChangeWallet}>
+                <option value="" disabled>Wallet</option>
+                {
+                    wallets.map(({ wallet }) =>
+                        <option key={wallet} value={wallet}>
+                            {wallet}
+                        </option>
+                    )
+                }
+            </select>
+
+            <DatePicker format="dd-MM-y" className="flex-1" value={date}
+             onChange={onChangeDate} />
         </div>
+        <Error>{errorWallet}</Error>
 
         <textarea id="description" placeholder="Description" rows={1} className="w-full mt-2 p-2" value={description} onChange={onChangeDescription} />
 
