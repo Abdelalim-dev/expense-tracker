@@ -127,7 +127,8 @@ const AddExpense = () => {
             <option value="" disabled>Subcategory</option>
             {
                 subcategories.map(({ subcategory, wallet }) =>
-                    <option key={subcategory} value={`${subcategory}.${wallet}`}>
+                    <option key={subcategory}
+                        value={`${subcategory}.${wallet ?? ''}`}>
                         {subcategory}
                     </option>
                 )
@@ -149,7 +150,7 @@ const AddExpense = () => {
             </select>
 
             <DatePicker format="dd-MM-y" className="flex-1" value={date}
-             onChange={onChangeDate} />
+                onChange={onChangeDate} />
         </div>
         <Error>{errorWallet}</Error>
 
