@@ -34,7 +34,7 @@ const AddExpense = () => {
             subcategory: subcategory,
             wallet: selectedWallet!,
             description,
-            date: new Date().getTime(),
+            date: date.getTime(),
         }
 
         const isValid = isValidForm(data)
@@ -158,7 +158,7 @@ const AddExpense = () => {
 
         <textarea id="description" placeholder="Description" rows={1} className="w-full mt-2 p-2" value={description} onChange={onChangeDescription} />
 
-        <button className="self-end mt-5 bg-emerald-700" onClick={handleSave}>Save</button>
+        <button className="self-end mt-5 bg-emerald-700 text-white" onClick={handleSave}>Save</button>
 
         <Toast
             position="top-center"
