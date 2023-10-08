@@ -2,8 +2,11 @@ import React, { ChangeEvent, PropsWithChildren } from "react";
 import useGoogleSheets from "../../hooks/useGoogleSheets/useGoogleSheets";
 import { ExpenseProps, ZodExpenseSchema } from "../../types/Expense";
 import { insertExpense } from "../../service/api";
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 
 import { ToastContainer as Toast, toast } from 'react-toastify';
+import DatePicker from "react-date-picker";
 
 
 const Error = ({ children }: PropsWithChildren) => {
@@ -17,6 +20,7 @@ const AddExpense = () => {
     const [selectedSubcategory, setSelectedSubcategory] = React.useState('')
     const [selectedWallet, setSelectedWallet] = React.useState('')
     const [description, setDescription] = React.useState("")
+    const [date, setDate] = React.useState(new Date())
 
     const [errorAmount, setErrorAmount] = React.useState("")
     const [errorSubcategory, setErrorSubcategory] = React.useState("")
@@ -106,6 +110,12 @@ const AddExpense = () => {
         setDescription(event.target.value)
     }
 
+    function onChangeDate(value): void {
+        console.log(value)
+        setDate(value)
+    }
+
+
     if (!subcategories.length) return <>Loading...</>
 
     return (<div className="relative flex flex-col">
@@ -125,18 +135,26 @@ const AddExpense = () => {
         </select>
         <Error>{errorSubcategory}</Error>
 
-        <select id="wallet" className="w-full mt-2 p-2 rounded"
-            value={selectedWallet} onChange={onChangeWallet}>
-            <option value="" disabled>Wallet</option>
-            {
-                wallets.map(({ wallet }) =>
-                    <option key={wallet} value={wallet}>
-                        {wallet}
-                    </option>
-                )
-            }
-        </select>
-        <Error>{errorWallet}</Error>
+        <div className="flex items-center mt-2">
+            <div className="flex flex-1">
+                <select id="wallet" className="w-full p-2 rounded"
+                    value={selectedWallet} onChange={onChangeWallet}>
+                    <option value="" disabled>Wallet</option>
+                    {
+                        wallets.map(({ wallet }) =>
+                            <option key={wallet} value={wallet}>
+                                {wallet}
+                            </option>
+                        )
+                    }
+                </select>
+                <Error>{errorWallet}</Error>
+            </div>
+            <div className="flex-1">
+                <DatePicker format="dd-MM-y"
+                    value={date} onChange={onChangeDate} />
+            </div>
+        </div>
 
         <textarea id="description" placeholder="Description" rows={1} className="w-full mt-2 p-2" value={description} onChange={onChangeDescription} />
 
