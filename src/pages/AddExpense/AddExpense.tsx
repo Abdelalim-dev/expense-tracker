@@ -31,17 +31,39 @@ const AddExpense = () => {
     function handleSave(): void {
         const [subcategory] = selectedSubcategory?.split('.')
 
+        const _date = getUpdatedDate()
+
         const data = {
             amount,
             subcategory: subcategory,
             wallet: selectedWallet!,
             description,
-            date: date?.valueOf() as number,
+            date: _date,
         }
 
         const isValid = isValidForm(data)
 
         if (isValid) submitForm(data)
+    }
+
+    function getUpdatedDate(): number {
+
+        const timestamp: number = date?.valueOf() as number
+
+        var _date = new Date(timestamp)
+
+        const now = new Date()
+
+        const updatedDate = new Date(
+            _date.getFullYear(),
+            _date.getMonth(),
+            _date.getDate(),
+            now.getHours(),
+            now.getMinutes(),
+            now.getSeconds()
+        )
+
+        return updatedDate.getTime()
     }
 
     function isValidForm(formData: ExpenseProps): boolean {
@@ -113,7 +135,6 @@ const AddExpense = () => {
     }
 
     function onChangeDate(value: Value): void {
-        console.log(value)
         setDate(value)
     }
 
